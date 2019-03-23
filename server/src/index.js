@@ -55,11 +55,7 @@ app.use(
 server.applyMiddleware({ app, cors: false });
 
 app.on("ready", () => {
-  app.listen({ port: process.env.PORT || 4000 }, () => {
-    console.log(
-      `Apollo Server on http://localhost:${process.env.PORT || 4000}/graphql`
-    );
-  });
+  app.listen({ port: process.env.PORT || 8000 });
 });
 
 const TESTING = false;
