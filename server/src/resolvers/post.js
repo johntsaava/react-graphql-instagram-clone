@@ -1,10 +1,7 @@
 import { combineResolvers } from "graphql-resolvers";
 import mongoose from "mongoose";
-import { v4 } from "uuid";
 
 import { isAuthenticated } from "./authorization";
-import { createWriteStream } from "fs";
-
 import fromCursorHash from "../utils/fromCursorHash";
 import toCursorHash from "../utils/toCursorHash";
 
@@ -47,18 +44,10 @@ export default {
   Mutation: {
     createPost: combineResolvers(
       isAuthenticated,
-      async (parent, { picture, caption }, { req, models }) => {
-        const { createReadStream, filename } = await picture;
-
-        const hashedFilename = `${v4()}.${filename.split(".").pop()}`;
-
-        await createReadStream().pipe(
-          createWriteStream(`${__dirname}/../../pictures/${hashedFilename}`)
-        );
-
+      async (parent, { pictureUrl, caption }, { req, models }) => {
         const post = new models.Post({
           caption,
-          pictureUrl: `http://localhost:8000/pictures/${hashedFilename}`,
+          pictureUrl,
           author: req.session.userId
         });
         await post.save();
@@ -66,6 +55,7 @@ export default {
         return post;
       }
     ),
+
     likePost: combineResolvers(
       isAuthenticated,
       async (parent, { id }, { req, models }) => {
@@ -79,6 +69,7 @@ export default {
         return true;
       }
     ),
+
     unlikePost: combineResolvers(
       isAuthenticated,
       async (parent, { id }, { req, models }) => {

@@ -1,9 +1,9 @@
 import { ApolloClient } from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
-import { createUploadLink } from "apollo-upload-client";
+import { HttpLink } from "apollo-link-http";
 
-const link = new createUploadLink({
-  uri: "http://localhost:8000/graphql",
+const link = new HttpLink({
+  uri: "https://react-instagram-clone-server.herokuapp.com/graphql",
   credentials: "include"
 });
 

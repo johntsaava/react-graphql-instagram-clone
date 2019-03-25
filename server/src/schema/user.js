@@ -31,7 +31,7 @@ export default gql`
     lastName: String
     username: String
     email: String
-    picture: PictureUpload
+    profilePictureUrl: String
   }
 
   input ChangePasswordInput {

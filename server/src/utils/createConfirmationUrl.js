@@ -7,5 +7,5 @@ export default async userId => {
   const token = v4();
   await redis.set(`${confirmUserPrefix}${token}`, userId, "ex", 60 * 60 * 24); // 1 day expiration
 
-  return `http://localhost:3000/confirm-user/${token}`;
+  return `https://react-instagram-clone-client.herokuapp.com/confirm-user/${token}`;
 };

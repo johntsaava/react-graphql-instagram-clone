@@ -4,7 +4,6 @@ import context from "../../context";
 
 import StyledNav from "./styled/StyledNav";
 import Container from "./styled/Container";
-import Search from "./styled/Search";
 import LinksWrapper from "./styled/LinksWrapper";
 import LoggedInLinks from "./LoggedInLinks";
 import LoggedOutLinks from "./LoggedOutLinks";

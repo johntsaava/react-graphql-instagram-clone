@@ -5,7 +5,6 @@ import postSchema from "./post";
 import commentSchema from "./comment";
 
 const linkSchema = gql`
-  scalar PictureUpload
   scalar Date
 
   type Query {

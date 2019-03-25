@@ -7,7 +7,7 @@ export default gql`
   }
 
   extend type Mutation {
-    createPost(picture: PictureUpload!, caption: String!): Post
+    createPost(pictureUrl: String!, caption: String!): Post
     likePost(id: ID!): Boolean!
     unlikePost(id: ID!): Boolean!
   }

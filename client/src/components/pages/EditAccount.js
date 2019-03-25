@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Formik, Field } from "formik";
 import { useMutation } from "react-apollo-hooks";
 import * as Yup from "yup";
+import axios from "axios";
 
 import EDIT_ACCOUNT from "../../graphql/user/mutations/editAccount";
 import context from "../../context";
@@ -51,11 +52,11 @@ const EditAccountSchema = Yup.object().shape({
 const EditAccount = () => {
   const { state } = useContext(context);
   const [picture, usePicture] = useState(null);
-  const [pictureUrl, usePictureUrl] = useState(null);
+  const [picturePreview, usePicturePreview] = useState(null);
   const edit = useMutation(EDIT_ACCOUNT);
 
   useEffect(() => {
-    if (picture) usePictureUrl(URL.createObjectURL(picture));
+    if (picture) usePicturePreview(URL.createObjectURL(picture));
   }, [picture]);
 
   return (
@@ -65,7 +66,19 @@ const EditAccount = () => {
         onSubmit={async input => {
           try {
             if (picture) {
-              input = { ...input, picture };
+              const formdata = new FormData();
+              formdata.append("image", picture);
+
+              const res = await axios.post(
+                "https://react-instagram-clone-server.herokuapp.com/api/image-upload",
+                formdata,
+                {
+                  headers: {
+                    "Content-Type": "multipart/form-data"
+                  }
+                }
+              );
+              input = { ...input, profilePictureUrl: res.data.imageUrl };
             }
             await edit({
               variables: {
@@ -87,7 +100,9 @@ const EditAccount = () => {
           <StyledFormWrapper>
             <StyledForm onSubmit={handleSubmit}>
               <Picture
-                url={pictureUrl ? pictureUrl : state.user.profilePictureUrl}
+                url={
+                  picturePreview ? picturePreview : state.user.profilePictureUrl
+                }
               />
               <UploadWrapper>
                 <PictureUpload usePicture={usePicture} />

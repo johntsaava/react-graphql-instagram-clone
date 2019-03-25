@@ -1,8 +1,6 @@
 import { combineResolvers } from "graphql-resolvers";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
-import { v4 } from "uuid";
-import { createWriteStream } from "fs";
 
 import { isAdmin } from "./authorization";
 import redis from "../redis";
@@ -140,18 +138,6 @@ export default {
     },
 
     editAccount: async (parent, { input }, { req, models }) => {
-      if (input.picture) {
-        const { createReadStream, filename } = await input.picture;
-        const hashedFilename = `${v4()}.${filename.split(".").pop()}`;
-        await createReadStream().pipe(
-          createWriteStream(`${__dirname}/../../pictures/${hashedFilename}`)
-        );
-        const profilePictureUrl = `http://localhost:8000/pictures/${hashedFilename}`;
-
-        delete input.picture;
-        input.profilePictureUrl = profilePictureUrl;
-      }
-
       await models.User.findOneAndUpdate(req.session.userId, input);
 
       return await models.User.findById(req.session.userId);

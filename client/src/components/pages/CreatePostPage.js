@@ -13,12 +13,7 @@ const CreatePostPage = ({ history, me }) => {
   const [picture, usePicture] = useState(null);
 
   return picture ? (
-    <CreatePost
-      me={me}
-      picture={picture}
-      pictureUrl={URL.createObjectURL(picture)}
-      history={history}
-    />
+    <CreatePost me={me} picture={picture} history={history} />
   ) : (
     <StyledPictureUpload usePicture={usePicture} />
   );

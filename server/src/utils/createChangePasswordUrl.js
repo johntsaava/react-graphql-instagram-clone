@@ -12,5 +12,5 @@ export default async userId => {
     60 * 60 * 24
   ); // 1 day expiration
 
-  return `http://localhost:3000/change-password/${token}`;
+  return `https://react-instagram-clone-client.herokuapp.com/change-password/${token}`;
 };

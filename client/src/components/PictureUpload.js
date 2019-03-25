@@ -4,6 +4,7 @@ const PictureUpload = ({ usePicture, ...props }) => (
   <input
     {...props}
     type="file"
+    accept="image/*"
     onChange={({
       target: {
         validity,
