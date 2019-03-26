@@ -5,7 +5,7 @@ import context from "../../context";
 
 import * as Icons from "../../Icons";
 
-const Info = styled.div`
+const InfoWrapper = styled.div`
   display: none;
   position: absolute;
   width: 100%;
@@ -19,11 +19,15 @@ const Info = styled.div`
   }
 `;
 
-const InfoEl = styled.span`
+const Info = styled.span`
   display: flex;
   align-items: center;
   color: #fff;
   font-weight: 500;
+`;
+
+const InfoNum = styled.span`
+  margin-left: 5px;
 `;
 
 const StyledPost = styled.div`
@@ -33,7 +37,7 @@ const StyledPost = styled.div`
   width: 94%;
   position: relative;
   &:hover {
-    ${Info} {
+    ${InfoWrapper} {
       display: flex;
     }
   }
@@ -54,16 +58,16 @@ const Post = ({ post }) => {
         dispatch({ type: "SET_POST", payload: post.id });
       }}
     >
-      <Info>
-        <InfoEl>
+      <InfoWrapper>
+        <Info>
           <Icons.Like fill="#fff" height="22px" />
-          {post.likes.length}
-        </InfoEl>
-        <InfoEl>
+          <InfoNum>{post.likes.length}</InfoNum>
+        </Info>
+        <Info>
           <Icons.Comment fill="#fff" height="22px" />
-          {post.comments.length}
-        </InfoEl>
-      </Info>
+          <InfoNum>{post.comments.length}</InfoNum>
+        </Info>
+      </InfoWrapper>
     </StyledPost>
   );
 };

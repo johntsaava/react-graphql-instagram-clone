@@ -51,7 +51,12 @@ const SignUp = ({ history }) => {
           });
           history.push("/check-email");
         } catch (err) {
-          setErrors(err.graphQLErrors[0].extensions.exception.errors);
+          const errors = {};
+          if (err.graphQLErrors[0].message.indexOf("username") > 0)
+            errors.username = "already taken";
+          if (err.graphQLErrors[0].message.indexOf("email") > 0)
+            errors.email = "already taken";
+          setErrors(errors);
         }
       }}
       initialValues={{

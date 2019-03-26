@@ -13,10 +13,11 @@ import InputField from "../fields/InputField";
 import StyledForm from "../styled/StyledForm";
 import StyledFormButton from "../styled/StyledFormButton";
 import StyledFormWrapper from "../styled/StyledFormWrapper";
+import userAvatar from "../../user.jpg";
 
 const Picture = styled.div`
   width: 100%;
-  max-width: 200px;
+  max-width: 150px;
   background: url(${props => props.url}) center no-repeat;
   background-size: cover;
   border-radius: 50%;
@@ -28,7 +29,7 @@ const Picture = styled.div`
 `;
 
 const UploadWrapper = styled.div`
-  margin: 10px 0 20px 0;
+  margin: 20px 0 25px 0;
 `;
 
 const EditAccountSchema = Yup.object().shape({
@@ -101,7 +102,7 @@ const EditAccount = () => {
             <StyledForm onSubmit={handleSubmit}>
               <Picture
                 url={
-                  picturePreview ? picturePreview : state.user.profilePictureUrl
+                  picturePreview || state.user.profilePictureUrl || userAvatar
                 }
               />
               <UploadWrapper>

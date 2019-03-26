@@ -19,6 +19,7 @@ export default gql`
       }
       author {
         id
+        profilePictureUrl
         username
       }
     }

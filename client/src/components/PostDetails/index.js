@@ -1,16 +1,17 @@
 import React, { useContext, useState } from "react";
 import { useQuery, useMutation } from "react-apollo-hooks";
+import { withRouter } from "react-router-dom";
 
 import GET_POST from "../../graphql/post/queries/post";
 import ADD_COMMENT from "../../graphql/post/mutations/createComment";
 import LIKE_POST from "../../graphql/post/mutations/likePost";
 import UNLIKE_POST from "../../graphql/post/mutations/unlikePost";
 
+import userAvatar from "../../user.jpg";
 import Loading from "../Loading";
 import context from "../../context";
 import Date from "./Date";
 
-import * as Icons from "../../Icons";
 import Wrapper from "./styled/Wrapper";
 import Section from "./styled/Section";
 import Header from "./styled/Header";
@@ -18,13 +19,16 @@ import AuthorPicture from "./styled/AuthorPicture";
 import Username from "./styled/Username";
 import Comment from "./styled/Comment";
 import Actions from "./styled/Actions";
+import Action from "./styled/Action";
 import Comments from "./styled/Comments";
 import CommentTextarea from "./styled/CommentTextarea";
 import Picture from "./styled/Picture";
 import Likes from "./styled/Likes";
+import LikeIcon from "./styled/icons/LikeIcon";
+import CommentIcon from "./styled/icons/CommentIcon";
 
-const PostDetails = () => {
-  const { state } = useContext(context);
+const PostDetails = ({ history }) => {
+  const { state, dispatch } = useContext(context);
   const createComment = useMutation(ADD_COMMENT, {
     update: (proxy, { data: { createComment } }) => {
       try {
@@ -115,10 +119,7 @@ const PostDetails = () => {
 
       <Section>
         <Header>
-          <AuthorPicture
-            src="https://instagram.fcgk9-1.fna.fbcdn.net/vp/67246cd919422b22ddc6e1f048b8478d/5D0566F1/t51.2885-19/44884218_345707102882519_2446069589734326272_n.jpg?_nc_ht=instagram.fcgk9-1.fna.fbcdn.net&_nc_cat=1"
-            alt={post.caption}
-          />
+          <AuthorPicture url={post.author.profilePictureUrl || userAvatar} />
           <Username to={`/user/${post.author.username}`}>
             {post.author.username}
           </Username>
@@ -143,33 +144,45 @@ const PostDetails = () => {
         </Comments>
 
         <Actions>
-          <Icons.Like
-            fill={post.viewerHasStarred ? "#e64855" : "none"}
-            stroke={post.viewerHasStarred ? "#e64855" : "#262626"}
-            onClick={() => {
-              if (post.viewerHasStarred)
-                unlikePost({
-                  variables: {
-                    id: post.id
-                  }
-                });
-              else
-                likePost({
-                  variables: {
-                    id: post.id
-                  }
-                });
-            }}
-          />
-          <Icons.Comment
-            fill="none"
-            stroke="#262626"
-            onClick={() => {
-              createComment({
-                variables: { postId: post.id, text }
-              });
-            }}
-          />
+          <Action>
+            <LikeIcon
+              active={post.viewerHasStarred ? 1 : 0}
+              onClick={() => {
+                if (state.user) {
+                  if (post.viewerHasStarred)
+                    unlikePost({
+                      variables: {
+                        id: post.id
+                      }
+                    });
+                  else
+                    likePost({
+                      variables: {
+                        id: post.id
+                      }
+                    });
+                } else {
+                  history.push("/sign-in");
+                  dispatch({ type: "RESET_POST" });
+                }
+              }}
+            />
+          </Action>
+          <Action>
+            <CommentIcon
+              onClick={() => {
+                if (state.user) {
+                  if (text.length > 0)
+                    createComment({
+                      variables: { postId: post.id, text }
+                    });
+                } else {
+                  history.push("/sign-in");
+                  dispatch({ type: "RESET_POST" });
+                }
+              }}
+            />
+          </Action>
         </Actions>
 
         <Likes>Likes {post.likes.length}</Likes>
@@ -189,4 +202,4 @@ const PostDetails = () => {
   );
 };
 
-export default PostDetails;
+export default withRouter(PostDetails);

@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import context from "../context";
 import ButtonLink from "./styled/ButtonLink";
+import userAvatar from "../user.jpg";
 
 const StyledProfile = styled.div`
   display: flex;
@@ -67,12 +68,7 @@ const Profile = ({ user }) => {
   const { state } = useContext(context);
   return (
     <StyledProfile>
-      <Picture
-        src={
-          user.profilePictureUrl ||
-          "https://instagram.fcgk9-1.fna.fbcdn.net/vp/67246cd919422b22ddc6e1f048b8478d/5D0566F1/t51.2885-19/44884218_345707102882519_2446069589734326272_n.jpg?_nc_ht=instagram.fcgk9-1.fna.fbcdn.net&_nc_cat=1"
-        }
-      />
+      <Picture src={user.profilePictureUrl || userAvatar} />
       <Info>
         <InfoHeader>
           <Username>{user.username}</Username>
