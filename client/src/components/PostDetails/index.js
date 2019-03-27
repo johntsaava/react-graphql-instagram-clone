@@ -26,6 +26,7 @@ import Picture from "./styled/Picture";
 import Likes from "./styled/Likes";
 import LikeIcon from "./styled/icons/LikeIcon";
 import CommentIcon from "./styled/icons/CommentIcon";
+import Close from "./Close";
 
 const PostDetails = ({ history }) => {
   const { state, dispatch } = useContext(context);
@@ -115,11 +116,17 @@ const PostDetails = ({ history }) => {
 
   return (
     <Wrapper>
+      <Close dispatch={dispatch} />
       <Picture src={post.pictureUrl} alt={post.caption} />
 
       <Section>
         <Header>
-          <AuthorPicture url={post.author.profilePictureUrl || userAvatar} />
+          <AuthorPicture
+            url={post.author.profilePictureUrl || userAvatar}
+            onClick={() => {
+              history.push(`/user/${post.author.username}`);
+            }}
+          />
           <Username to={`/user/${post.author.username}`}>
             {post.author.username}
           </Username>

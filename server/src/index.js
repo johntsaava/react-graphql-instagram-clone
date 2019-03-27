@@ -32,7 +32,7 @@ const RedisStore = connectRedis(session);
 app.use(
   cors({
     credentials: true,
-    origin: "https://react-instagram-clone-client.herokuapp.com"
+    origin: process.env.DOMAIN
   })
 );
 

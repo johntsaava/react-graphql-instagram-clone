@@ -50,8 +50,8 @@ const EditAccountSchema = Yup.object().shape({
     .required("Required")
 });
 
-const EditAccount = () => {
-  const { state } = useContext(context);
+const EditAccount = ({ history }) => {
+  const { state, dispatch } = useContext(context);
   const [picture, usePicture] = useState(null);
   const [picturePreview, usePicturePreview] = useState(null);
   const edit = useMutation(EDIT_ACCOUNT);
@@ -70,7 +70,7 @@ const EditAccount = () => {
               const formdata = new FormData();
               formdata.append("image", picture);
 
-              const res = await axios.post(
+              const pictureData = await axios.post(
                 "https://react-instagram-clone-server.herokuapp.com/api/image-upload",
                 formdata,
                 {
@@ -79,13 +79,24 @@ const EditAccount = () => {
                   }
                 }
               );
-              input = { ...input, profilePictureUrl: res.data.imageUrl };
+              input = {
+                ...input,
+                profilePictureUrl: pictureData.data.imageUrl
+              };
             }
-            await edit({
+            const userData = await edit({
               variables: {
                 input
               }
             });
+            if (userData.data.editAccount) {
+              dispatch({
+                type: "INIT_USER",
+                payload: userData.data.editAccount
+              });
+
+              history.push(`/user/${userData.data.editAccount.username}`);
+            }
           } catch (err) {
             console.log(err);
           }

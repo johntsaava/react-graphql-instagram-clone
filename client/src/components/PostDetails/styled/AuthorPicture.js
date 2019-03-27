@@ -7,4 +7,5 @@ export default styled.div`
   background-size: cover;
   border-radius: 50%;
   margin-right: 12px;
+  cursor: pointer;
 `;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { useQuery } from "react-apollo-hooks";
 
@@ -7,6 +7,7 @@ import Profile from "../Profile";
 import Header from "../Posts/Header";
 import Posts from "../Posts";
 import Loading from "../Loading";
+import context from "../../context";
 
 const Container = styled.div`
   width: 100%;
@@ -16,6 +17,11 @@ const Container = styled.div`
 `;
 
 const User = ({ match, history }) => {
+  const { dispatch } = useContext(context);
+  useEffect(() => {
+    dispatch({ type: "RESET_POST" });
+  }, []);
+
   const { data, error, loading } = useQuery(GET_USER, {
     variables: { username: match.params.username }
   });

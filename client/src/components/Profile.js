@@ -7,6 +7,10 @@ import userAvatar from "../user.jpg";
 
 const StyledProfile = styled.div`
   display: flex;
+  @media (max-width: 550px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const Picture = styled.div`
@@ -22,6 +26,10 @@ const Picture = styled.div`
 
 const Info = styled.div`
   margin-left: 30px;
+  @media (max-width: 550px) {
+    margin-left: 0;
+    margin-top: 30px;
+  }
 `;
 
 const Username = styled.h1`
@@ -78,7 +86,8 @@ const Profile = ({ user }) => {
         </InfoHeader>
         <PostsInfo>
           <Item>
-            <Count>{user.posts.pageInfo.totalCount}</Count> posts
+            <Count>{user.posts.pageInfo.totalCount}</Count>
+            {` post${user.posts.pageInfo.totalCount > 1 ? "s" : ""}`}
           </Item>
         </PostsInfo>
         <InfoMain>
