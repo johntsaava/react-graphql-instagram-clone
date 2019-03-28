@@ -36,11 +36,13 @@ const User = ({ match, history }) => {
     return null;
   }
   return (
-    <Container>
-      <Profile user={data.user} />
-      <Header />
+    <>
+      <Container>
+        <Profile user={data.user} />
+        <Header />
+      </Container>
       <Posts posts={data.user.posts.edges} />
-    </Container>
+    </>
   );
 };
 

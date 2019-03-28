@@ -1,10 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 
+import * as Icons from "../../Icons";
+
 const StyledButton = styled.button`
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+`;
+
+const CloseIcon = styled(Icons.Close)`
+  height: 18px;
+  fill: #262626;
 `;
 
 const Close = ({ dispatch }) => (
@@ -13,7 +23,7 @@ const Close = ({ dispatch }) => (
       dispatch({ type: "RESET_POST" });
     }}
   >
-    Close
+    <CloseIcon />
   </StyledButton>
 );
 

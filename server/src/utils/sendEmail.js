@@ -7,7 +7,7 @@ const transporter = mailgun({
 
 export default async (email, url) => {
   const data = {
-    from: "<instagram-clone@samples.mailgun.org>",
+    from: "<support@instagram-clone.ml>",
     to: email,
     subject: "Instagram-clone",
     html: `<a href="${url}">${url}</a>`

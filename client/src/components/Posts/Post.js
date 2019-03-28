@@ -31,11 +31,11 @@ const InfoNum = styled.span`
 `;
 
 const StyledPost = styled.div`
+  position: relative;
+  margin: 10px;
   background: url(${props => props.url}) no-repeat center;
   background-size: cover;
   background-color: #fff;
-  width: 94%;
-  position: relative;
   &:hover {
     ${InfoWrapper} {
       display: flex;
@@ -44,7 +44,11 @@ const StyledPost = styled.div`
   &:after {
     content: "";
     display: block;
-    padding-bottom: 100%;
+    padding-top: 100%;
+  }
+
+  @media (max-width: 550px) {
+    margin: 5px;
   }
 `;
 
