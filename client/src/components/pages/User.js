@@ -1,20 +1,15 @@
 import React, { useContext, useEffect } from "react";
-import styled from "styled-components";
 import { useQuery } from "react-apollo-hooks";
 
 import GET_USER from "../../graphql/user/queries/user";
+import context from "../../context";
+
 import Profile from "../Profile";
 import Header from "../Posts/Header";
 import Posts from "../Posts";
 import Loading from "../Loading";
-import context from "../../context";
-
-const Container = styled.div`
-  width: 100%;
-  max-width: 1010px;
-  margin: 0 auto;
-  padding: 60px 20px 0;
-`;
+import Container from "../styled/Container";
+import PostsContainer from "../styled/PostsContainer";
 
 const User = ({ match, history }) => {
   const { dispatch } = useContext(context);
@@ -41,7 +36,9 @@ const User = ({ match, history }) => {
         <Profile user={data.user} />
         <Header />
       </Container>
-      <Posts posts={data.user.posts.edges} />
+      <PostsContainer>
+        <Posts posts={data.user.posts.edges} />
+      </PostsContainer>
     </>
   );
 };
