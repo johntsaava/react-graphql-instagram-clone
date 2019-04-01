@@ -1,6 +1,11 @@
 import React, { useReducer } from "react";
 import styled, { createGlobalStyle } from "styled-components";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from "react-router-dom";
 import { useQuery } from "react-apollo-hooks";
 
 import context from "../context";
@@ -11,7 +16,6 @@ import Nav from "./Nav";
 import Home from "./pages/Home";
 import ConfirmUser from "./pages/ConfirmUser";
 import CheckEmail from "./pages/CheckEmail";
-import DeleteUser from "./pages/DeleteUser";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -78,6 +82,11 @@ const App = () => {
             </>
           )}
           <Switch>
+            {!state.user && <Redirect from="/create-post" to="/sign-in" />}
+            {!state.user && <Redirect from="/edit-account" to="/sign-in" />}
+            {state.user && <Redirect from="/sign-in" to="/" />}
+            {state.user && <Redirect from="/sign-up" to="/" />}
+
             <Route exact path="/" component={Home} />
             <Route path="/user/:username" component={User} />
             <Route path="/edit-account" component={EditAccount} />
@@ -86,7 +95,6 @@ const App = () => {
             <Route path="/sign-in" component={SignIn} />
             <Route path="/confirm-user/:token" component={ConfirmUser} />
             <Route path="/check-email" component={CheckEmail} />
-            <Route path="/delete-user" component={DeleteUser} />
             <Route path="/forgot-password" component={ForgotPassword} />
             <Route path="/change-password/:token" component={ChangePassword} />
             <Route component={NotFound} />
