@@ -1,6 +1,6 @@
 import React from "react";
 
-const PictureUpload = ({ usePicture, ...props }) => (
+const PictureUpload = ({ setPicture, ...props }) => (
   <input
     {...props}
     type="file"
@@ -12,7 +12,7 @@ const PictureUpload = ({ usePicture, ...props }) => (
       }
     }) => {
       if (validity.valid) {
-        usePicture(file);
+        setPicture(file);
       }
     }}
   />

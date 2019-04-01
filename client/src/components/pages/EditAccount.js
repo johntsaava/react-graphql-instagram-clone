@@ -52,12 +52,12 @@ const EditAccountSchema = Yup.object().shape({
 
 const EditAccount = ({ history }) => {
   const { state, dispatch } = useContext(context);
-  const [picture, usePicture] = useState(null);
-  const [picturePreview, usePicturePreview] = useState(null);
+  const [picture, setPicture] = useState(null);
+  const [picturePreview, setPicturePreview] = useState(null);
   const edit = useMutation(EDIT_ACCOUNT);
 
   useEffect(() => {
-    if (picture) usePicturePreview(URL.createObjectURL(picture));
+    if (picture) setPicturePreview(URL.createObjectURL(picture));
   }, [picture]);
 
   return (
@@ -117,7 +117,7 @@ const EditAccount = ({ history }) => {
                 }
               />
               <UploadWrapper>
-                <PictureUpload usePicture={usePicture} />
+                <PictureUpload setPicture={setPicture} />
               </UploadWrapper>
 
               <Field

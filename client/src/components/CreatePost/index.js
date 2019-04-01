@@ -16,13 +16,13 @@ import Main from "./styled/Main";
 import Picture from "./styled/Picture";
 
 const CreatePost = ({ picture, history }) => {
-  const [caption, useCaption] = useState("");
+  const [caption, setCaption] = useState("");
   const { state } = useContext(context);
   const mutate = useMutation(CREATE_POST);
 
-  const [picturePreview, usePicturePreview] = useState(null);
+  const [picturePreview, setPicturePreview] = useState(null);
   useEffect(() => {
-    if (picture) usePicturePreview(URL.createObjectURL(picture));
+    if (picture) setPicturePreview(URL.createObjectURL(picture));
   }, [picture]);
 
   return (
@@ -69,7 +69,7 @@ const CreatePost = ({ picture, history }) => {
       <Main>
         <Textarea
           onChange={e => {
-            useCaption(e.target.value);
+            setCaption(e.target.value);
           }}
           value={caption}
           type="text"

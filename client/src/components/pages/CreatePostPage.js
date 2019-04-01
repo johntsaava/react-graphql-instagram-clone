@@ -10,12 +10,12 @@ const StyledPictureUpload = styled(PictureUpload)`
 `;
 
 const CreatePostPage = ({ history, me }) => {
-  const [picture, usePicture] = useState(null);
+  const [picture, setPicture] = useState(null);
 
   return picture ? (
     <CreatePost me={me} picture={picture} history={history} />
   ) : (
-    <StyledPictureUpload usePicture={usePicture} />
+    <StyledPictureUpload setPicture={setPicture} />
   );
 };
 

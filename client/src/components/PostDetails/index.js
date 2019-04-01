@@ -103,7 +103,7 @@ const PostDetails = ({ history }) => {
       }
     }
   });
-  const [text, useText] = useState("");
+  const [text, setText] = useState("");
   const {
     data: { post },
     error,
@@ -197,7 +197,7 @@ const PostDetails = ({ history }) => {
 
         <CommentTextarea
           onChange={e => {
-            useText(e.target.value);
+            setText(e.target.value);
           }}
           type="text"
           placeholder="Add comment..."
