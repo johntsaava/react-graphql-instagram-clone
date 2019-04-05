@@ -1,4 +1,4 @@
-project [demo](https://github.com/facebook/create-react-app).
+project [demo](http://www.instagram-clone.ml/).
 
 Simplified instagram clone app.
 
